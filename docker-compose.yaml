@@ -1,0 +1,72 @@
+---
+version: '3'
+services:
+  steve-location-api:
+    image: th3re/steve-location-api:latest
+    container_name: steve-location-api
+    environment:
+      PORT: "8081"
+      RABBIT_HOST: "rabbit"
+      RABBIT_PORT: "5672"
+      RABBIT_CONNECTION_ATTEMPTS: 10
+      RABBIT_RETRY_DELAY: 3
+      CHANNEL_EXCHANGE: "location"
+      CHANNEL_TOPIC: "location"
+    ports:
+      - 8081:8081
+    links:
+      - rabbit
+  steve-calendar-api:
+    image: th3re/steve-calendar-api:latest
+    container_name: steve-calendar-api
+    environment:
+      GOOGLE_HOST: 'https://www.googleapis.com'
+      GOOGLE_MAPS_HOST: 'https://maps.googleapis.com'
+      RABBIT_HOST_IN: 'rabbit'
+      RABBIT_EXCHANGE_IN: 'location'
+      RABBIT_BINDING_KEY_IN: 'location.*'
+      RABBIT_HOST_OUT: "rabbit"
+      RABBIT_PORT_OUT: "5672"
+      RABBIT_CONNECTION_ATTEMPTS: 10
+      RABBIT_RETRY_DELAY: 3
+      RABBIT_EXCHANGE_OUT: ''
+      RABBIT_TOPIC_OUT: 'travel'
+      AUTH_URL: 'http://steve-auth-api:8080'
+      TIME_DELTA: 7200
+    env_file:
+      - .google_credentials
+    links:
+      - rabbit
+      - steve-auth-api
+  rabbit:
+    image: rabbitmq:3
+    container_name: rabbit
+    ports:
+      - 5672:5672
+  steve-auth-api:
+    image: th3re/steve-auth-api:latest
+    container_name: steve-auth-api
+    env_file:
+      - .google_credentials
+    environment:
+      PORT: "8080"
+      REDIRECT_URI: "http://127.0.0.1:8080/auth"
+      REQUEST_URL: "https://oauth2.googleapis.com/token"
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_USER: root
+      MONGO_PASSWORD: root
+      MONGO_DATABASE: auth
+      MONGO_COLLECTION: credentials
+      CACHE_TTL: 360000
+    ports:
+      - 8080:8080
+    links:
+      - mongo
+  mongo:
+    image: mongo:4.2.3
+    container_name: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "root"
+    ports:
+      - 27017:27017
