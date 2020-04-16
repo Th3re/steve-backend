@@ -1,6 +1,13 @@
 ---
 version: '3'
 services:
+  steve-notification-api:
+    image: th3re/steve-notification-api:latest
+    container_name: steve-notification-api
+    env_file: 
+      - .google_credentials
+    links:
+      - rabbit
   steve-location-api:
     image: th3re/steve-location-api:latest
     container_name: steve-location-api
