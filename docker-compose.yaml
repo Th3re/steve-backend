@@ -36,8 +36,8 @@ services:
       RABBIT_PORT_OUT: "5672"
       RABBIT_CONNECTION_ATTEMPTS: 10
       RABBIT_RETRY_DELAY: 3
-      RABBIT_EXCHANGE_OUT: ''
-      RABBIT_TOPIC_OUT: 'travel'
+      RABBIT_EXCHANGE_OUT: 'travel'
+      RABBIT_TOPIC_OUT: ''
       AUTH_URL: 'http://steve-auth-api:8080'
       TIME_DELTA: 2678400
     env_file:
