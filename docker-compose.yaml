@@ -4,6 +4,7 @@ services:
   steve-notification-api:
     image: th3re/steve-notification-api:latest
     container_name: steve-notification-api
+    restart: on-failure
     env_file: 
       - .google_credentials
     links:
@@ -11,6 +12,7 @@ services:
   steve-location-api:
     image: th3re/steve-location-api:latest
     container_name: steve-location-api
+    restart: on-failure
     environment:
       SERVER_PORT: "8081"
       RABBIT_HOST: "rabbit"
@@ -26,6 +28,7 @@ services:
   steve-calendar-api:
     image: th3re/steve-calendar-api:latest
     container_name: steve-calendar-api
+    restart: on-failure
     environment:
       GOOGLE_HOST: 'https://www.googleapis.com'
       GOOGLE_MAPS_HOST: 'https://maps.googleapis.com'
@@ -48,11 +51,13 @@ services:
   rabbit:
     image: rabbitmq:3
     container_name: rabbit
+    restart: on-failure
     ports:
       - 5672:5672
   steve-auth-api:
     image: th3re/steve-auth-api:latest
     container_name: steve-auth-api
+    restart: on-failure
     env_file:
       - .google_credentials
     environment:
@@ -71,6 +76,7 @@ services:
   mongo:
     image: mongo:4.2.3
     container_name: mongo
+    restart: on-failure
     environment:
       MONGO_INITDB_ROOT_USERNAME: "root"
       MONGO_INITDB_ROOT_PASSWORD: "root"
@@ -79,6 +85,7 @@ services:
   proxy:
     image: nginx:1.18-alpine
     container_name: proxy
+    restart: on-failure
     ports:
       - 8888:80
     volumes:
