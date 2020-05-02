@@ -43,6 +43,7 @@ services:
       RABBIT_TOPIC_OUT: ''
       AUTH_URL: 'http://steve-auth-api:8080'
       TIME_DELTA: 2678400
+      STEVE_EVENTS_URL: http://steve-events-api:8088
     env_file:
       - .google_credentials
     links:
