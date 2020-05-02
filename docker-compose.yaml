@@ -74,7 +74,7 @@ services:
     links:
       - mongo
   steve-events-api:
-    image: steve-events-api:latest
+    image: th3re/steve-events-api:latest
     container_name: steve-events-api
     build:
       context: ./
