@@ -110,3 +110,4 @@ services:
     links:
       - steve-auth-api
       - steve-location-api
+      - steve-events-api
