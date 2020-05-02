@@ -48,6 +48,7 @@ services:
     links:
       - rabbit
       - steve-auth-api
+      - steve-events-api
   rabbit:
     image: rabbitmq:3
     container_name: rabbit
