@@ -102,6 +102,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: "root"
     ports:
       - 27017:27017
+    volumes:
+      - steve_mongo:/data/db
   proxy:
     image: nginx:1.18-alpine
     container_name: proxy
