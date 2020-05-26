@@ -64,6 +64,7 @@ services:
       - .google_credentials
     environment:
       SERVER_PORT: "8080"
+      GOOGLE_HOST: "https://content-people.googleapis.com"
       GOOGLE_REDIRECT_URI: "http://127.0.0.1:8080/auth"
       GOOGLE_REQUEST_URL: "https://oauth2.googleapis.com/token"
       MONGO_URI: mongodb://mongo:27017
