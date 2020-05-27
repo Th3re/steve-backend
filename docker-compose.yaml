@@ -84,6 +84,7 @@ services:
       dockerfile: ./Dockerfile
     environment:
       SERVER_PORT: "8088"
+      GOOGLE_HOST: https://content.googleapis.com
       MONGO_URI: mongodb://mongo:27017
       MONGO_USER: root
       MONGO_PASSWORD: root
