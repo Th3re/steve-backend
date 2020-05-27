@@ -79,9 +79,6 @@ services:
   steve-events-api:
     image: th3re/steve-events-api:latest
     container_name: steve-events-api
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
     environment:
       SERVER_PORT: "8088"
       GOOGLE_HOST: https://content.googleapis.com
